@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://api.github.com https://script.google.com https://script.googleusercontent.com; script-src 'sha256-94q2pH6PkhELweCeEf8xtt8RAiQvrBpEeRRnQV7d4rE='; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://api.github.com https://api.web3forms.com; script-src 'sha256-doorqYNknZfg26xaMN8+DzISVmO9bSwNqYVlUBMTESM='; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#4f46e5">
 <title>Kelime Koçu – Almanca ve İngilizce kelime öğrenme uygulaması</title>
@@ -446,7 +446,7 @@
       <h2>Sizi dinlemek istiyorum</h2>
       <p>Bir hata mı buldunuz, aklınızda bir fikir mi var? Yazın, mesajınız doğrudan bana ulaşsın.</p>
     </div>
-    <form class="fb" id="fb" data-endpoint="https://script.google.com/macros/s/AKfycbya5d0b5-JH3LEScd2YK8U2IiOJifcZzS2Az7Vzp034w22-2KSjEXE7G5jzxSuMqUe1XQ/exec">
+    <form class="fb" id="fb" data-key="f211121d-ef48-4971-8445-b3acb106992d">
       <div class="row">
         <div class="f">
           <label for="fbtur">Mesaj türü</label>
@@ -469,7 +469,7 @@
       <div class="hp" aria-hidden="true"><label>Bu alanı boş bırakın <input id="fbhp" type="text" tabindex="-1" autocomplete="off"></label></div>
       <button type="submit">Gönder</button>
       <p class="fbstat" id="fbstat" role="status" aria-live="polite"></p>
-      <p class="fbnote">Mesajınız doğrudan geliştiriciye iletilir; e-posta adresi yazmanıza gerek yok. Şifre, kart numarası gibi kişisel bilgiler yazmayın.</p>
+      <p class="fbnote">Mesajınız doğrudan geliştiriciye iletilir; e-posta adresi yazmanıza gerek yok. Şifre, kart numarası gibi kişisel bilgiler yazmayın. Mesajlar Web3Forms hizmeti üzerinden iletilir.</p>
     </form>
   </div>
 </section>
@@ -518,15 +518,16 @@ fetch('https://api.github.com/repos/'+REPO+'/releases/latest',{headers:{'Accept'
 var f=document.getElementById('fb');
 if(f){f.addEventListener('submit',function(e){
   e.preventDefault();
-  var st=document.getElementById('fbstat'),b=f.querySelector('button'),url=f.getAttribute('data-endpoint');
-  if(!url||url==='BURAYA_ADRES'){st.className='fbstat err';st.textContent='Görüş formu şu anda etkin değil.';return;}
+  var st=document.getElementById('fbstat'),b=f.querySelector('button'),key=f.getAttribute('data-key');
+  if(!key){st.className='fbstat err';st.textContent='Görüş formu şu anda etkin değil.';return;}
   if(document.getElementById('fbhp').value){return;}
-  var d={tur:document.getElementById('fbtur').value,ad:document.getElementById('fbname').value.trim(),mesaj:document.getElementById('fbmsg').value.trim(),hp:''};
+  var tur=document.getElementById('fbtur').value;
+  var d={access_key:key,subject:'Kelime Koçu – '+tur,from_name:'Kelime Koçu sayfası',kategori:tur,name:document.getElementById('fbname').value.trim()||'(adsız)',message:document.getElementById('fbmsg').value.trim()};
   b.disabled=true;st.className='fbstat';st.textContent='Gönderiliyor…';
-  fetch(url,{method:'POST',body:JSON.stringify(d)})
-  .then(function(r){if(!r.ok)throw 0;return r.json();})
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)})
+  .then(function(r){return r.json();})
   .then(function(j){
-    if(j&&j.ok===true){f.reset();st.className='fbstat ok';st.textContent='Teşekkürler! Mesajınız bana ulaştı.';}
+    if(j&&j.success){f.reset();st.className='fbstat ok';st.textContent='Teşekkürler! Mesajınız bana ulaştı.';}
     else{throw 0;}
   })
   .catch(function(){st.className='fbstat err';st.textContent='Gönderilemedi. Lütfen biraz sonra tekrar deneyin.';})
