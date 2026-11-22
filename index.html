@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://api.github.com; script-src 'sha256-l5EoDTCLSG1Jpa/d40fVN+wndA+3jErENYtPMLW3nVA='; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://api.github.com; script-src 'sha256-eN2bwBikJIJ3b5SXz8WVSE3AUMqic45odfoayvNcleg='; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#4f46e5">
 <title>Kelime Koçu – Almanca ve İngilizce kelime öğrenme uygulaması</title>
@@ -191,6 +191,26 @@
   .cta .btn{background:#fff;color:#4338ca;box-shadow:0 12px 28px rgba(0,0,0,.25)}
   .cta .meta{color:rgba(255,255,255,.85);margin-bottom:0}
 
+
+  /* Görüş formu */
+  .fb{max-width:680px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:32px;box-shadow:var(--shadow)}
+  .fb .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:620px){.fb .row{grid-template-columns:1fr}.fb{padding:22px}}
+  .fb label{display:block;font-weight:700;font-size:.9rem;margin:0 0 6px}
+  .fb label small{font-weight:500;color:var(--muted)}
+  .fb .f{margin-bottom:16px}
+  .fb input,.fb select,.fb textarea{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .15s,box-shadow .15s}
+  .fb textarea{min-height:150px;resize:vertical}
+  .fb input:focus,.fb select:focus,.fb textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 22%,transparent)}
+  .fb .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .fb button{font:inherit;cursor:pointer;border:0;width:100%;background:linear-gradient(135deg,var(--brand),var(--violet));color:#fff;font-weight:700;font-size:1.02rem;padding:15px;border-radius:14px;box-shadow:0 10px 24px rgba(91,75,232,.35);transition:transform .15s,opacity .15s}
+  .fb button:hover{transform:translateY(-1px)}
+  .fb button:disabled{opacity:.6;cursor:default;transform:none}
+  .fbstat{min-height:1.5em;margin:14px 0 0;text-align:center;font-weight:600;font-size:.95rem}
+  .fbstat.ok{color:var(--ok)}
+  .fbstat.err{color:var(--no)}
+  .fbnote{margin:12px 0 0;text-align:center;color:var(--muted);font-size:.84rem}
+
   footer{padding:44px 0 56px;text-align:center;color:var(--muted);font-size:.9rem}
   footer .brand{justify-content:center;margin-bottom:14px}
   footer p{margin:0 0 6px}
@@ -210,6 +230,7 @@
         <a href="#nasil">Nasıl çalışır</a>
         <a href="#kurulum">Kurulum</a>
         <a href="#sss">SSS</a>
+        <a href="#gorus">Görüş</a>
         <a class="pillbtn dlbtn" href="https://github.com/kelimekocu2026/Kelime-kocu-indir/releases/latest/download/Kelime-Kocu.apk" rel="noopener noreferrer">İndir</a>
       </div>
     </nav>
@@ -382,8 +403,8 @@
       </div>
       <div class="card">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
-        <h3>Bu sayfa veri toplamaz</h3>
-        <p>Bu sayfa yalnızca bilgi gösterir. Form, giriş ya da izleme aracı içermez, sizden hiçbir bilgi istemez.</p>
+        <h3>Reklam ve izleme yok</h3>
+        <p>Sayfada reklam ya da izleme aracı bulunmaz. Görüş göndermek için e-posta uygulamanız açılır, mesajınız yalnızca geliştiriciye ulaşır.</p>
       </div>
     </div>
     <p class="linkrow"><a href="https://github.com/kelimekocu2026/Kelime-kocu-indir/releases" rel="noopener noreferrer">Tüm sürümleri gör →</a></p>
@@ -415,6 +436,40 @@
         <p>Kelime Koçu bir Android uygulamasıdır; Android telefon ve tabletlerde kurulabilir.</p>
       </details>
     </div>
+  </div>
+</section>
+
+<section id="gorus">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Görüş ve öneri</span>
+      <h2>Sizi dinlemek istiyorum</h2>
+      <p>Bir hata mı buldunuz, aklınızda bir fikir mi var? Yazın, mesajınız doğrudan bana ulaşsın.</p>
+    </div>
+    <form class="fb" id="fb">
+      <div class="row">
+        <div class="f">
+          <label for="fbtur">Mesaj türü</label>
+          <select id="fbtur">
+            <option>Görüş</option>
+            <option>Öneri</option>
+            <option>Hata bildirimi</option>
+            <option>Diğer</option>
+          </select>
+        </div>
+        <div class="f">
+          <label for="fbname">Adınız <small>(isteğe bağlı)</small></label>
+          <input id="fbname" type="text" maxlength="80" autocomplete="name">
+        </div>
+      </div>
+      <div class="f">
+        <label for="fbmsg">Mesajınız</label>
+        <textarea id="fbmsg" required minlength="5" maxlength="1000"></textarea>
+      </div>
+      <button type="submit">E-posta ile gönder</button>
+      <p class="fbstat" id="fbstat" role="status" aria-live="polite"></p>
+      <p class="fbnote">“Gönder”e bastığınızda e-posta uygulamanız hazır yazılmış mesajla açılır; mesajı oradan gönderirsiniz. Şifre, kart numarası gibi kişisel bilgiler yazmayın.</p>
+    </form>
   </div>
 </section>
 
@@ -459,6 +514,19 @@ fetch('https://api.github.com/repos/'+REPO+'/releases/latest',{headers:{'Accept'
   for(i=0;i<btns.length;i++){btns[i].href=a.browser_download_url;}
   for(i=0;i<vers.length;i++){vers[i].textContent=t;}
 }).catch(function(){});
+var f=document.getElementById('fb');
+if(f){f.addEventListener('submit',function(e){
+  e.preventDefault();
+  var st=document.getElementById('fbstat');
+  var to=['kelimekocu','@','gmail.com'].join('');
+  var tur=document.getElementById('fbtur').value;
+  var name=document.getElementById('fbname').value.trim();
+  var msg=document.getElementById('fbmsg').value.trim();
+  var body=msg+(name?'\n\n— '+name:'');
+  st.className='fbstat ok';
+  st.textContent='E-posta uygulamanız açılıyor. Açılmazsa mesajınızı '+to+' adresine gönderebilirsiniz.';
+  window.location.href='mailto:'+to+'?subject='+encodeURIComponent('Kelime Koçu – '+tur)+'&body='+encodeURIComponent(body);
+});}
 })();
 </script>
 </body>
