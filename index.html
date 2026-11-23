@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://api.github.com https://api.web3forms.com; script-src 'sha256-liAUJBEZ2HC66l+HiXqh2dVM6/6rdtLkPt9+i2BYy4c='; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://api.github.com https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; script-src 'sha256-liAUJBEZ2HC66l+HiXqh2dVM6/6rdtLkPt9+i2BYy4c=' 'sha256-ZLIs+QWVIvihv0VjkI1YgHo9vEqu79DRac9HtcSos1c=' https://www.googletagmanager.com; base-uri 'none'; form-action 'none'">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FJJHCHBLH7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FJJHCHBLH7');
+</script>
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#4f46e5">
