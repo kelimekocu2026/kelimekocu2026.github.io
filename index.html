@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://api.github.com https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; script-src 'sha256-liAUJBEZ2HC66l+HiXqh2dVM6/6rdtLkPt9+i2BYy4c=' 'sha256-ZLIs+QWVIvihv0VjkI1YgHo9vEqu79DRac9HtcSos1c=' https://www.googletagmanager.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://api.github.com https://api.web3forms.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; script-src 'sha256-+y5nfD2zRAMYNVhBHG6fOMcWZSIpHeaiegFMzBlQLo8=' 'sha256-ZLIs+QWVIvihv0VjkI1YgHo9vEqu79DRac9HtcSos1c=' https://www.googletagmanager.com; base-uri 'none'; form-action 'none'">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FJJHCHBLH7"></script>
 <script>
@@ -287,6 +287,9 @@
   .cta .btn{background:#fff;color:#4338ca;box-shadow:0 12px 28px rgba(0,0,0,.25)}
   .cta .meta{color:rgba(255,255,255,.85);margin-bottom:0}
 
+  .stats{max-width:760px;margin:0 auto 30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .stats .num{padding:18px 12px}
+  .priv{max-width:680px;margin:18px auto 0;font-size:.82rem;line-height:1.6;color:var(--muted)}
   footer{padding:44px 0 calc(56px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:.9rem}
   footer .brand{justify-content:center;margin-bottom:14px}
   footer nav{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin:0 0 14px}
@@ -637,8 +640,8 @@
       </div>
       <div class="card rv d2">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
-        <h3>Reklam ve izleme yok</h3>
-        <p>Sayfada reklam ya da izleme aracı bulunmaz. Görüş formuna yazdıklarınız yalnızca geliştiriciye iletilir.</p>
+        <h3>Reklam yok, sayım anonim</h3>
+        <p>Sayfada reklam yoktur. Ziyaretler, sayfayı geliştirmek için Google Analytics ile anonim olarak sayılır. Görüş formuna yazdıklarınız yalnızca geliştiriciye iletilir.</p>
       </div>
     </div>
   </div>
@@ -732,7 +735,11 @@
       <a href="#sss">SSS</a>
       <a href="#gorus">Görüş bildir</a>
     </nav>
+    <div class="stats" id="stats" hidden>
+      <div class="num"><b id="dlTotal">–</b><span>toplam indirme</span></div>
+    </div>
     <p>Almanca ve İngilizce kelime öğrenme uygulaması · Android</p>
+    <p class="priv"><b>Gizlilik:</b> Bu sayfa, ziyaretleri anonim olarak sayabilmek için Google Analytics ve çerezler kullanır; kimliğinizi belirleyen bir bilgi toplanmaz. Görüş formundaki mesajınız yalnızca geliştiriciye iletilir.</p>
   </div>
 </footer>
 
@@ -763,6 +770,16 @@ fetch('https://api.github.com/repos/'+REPO+'/releases/latest',{headers:{'Accept'
   }catch(e){}
   for(i=0;i<btns.length;i++){btns[i].href=a.browser_download_url;}
   for(i=0;i<vers.length;i++){vers[i].textContent=t;}
+}).catch(function(){});
+
+/* Toplam indirme sayısı (GitHub'dan) */
+fetch('https://api.github.com/repos/'+REPO+'/releases?per_page=100',{headers:{'Accept':'application/vnd.github+json'}})
+.then(function(r){if(!r.ok)throw 0;return r.json();})
+.then(function(list){
+  var n=0,i,j,as;
+  for(i=0;i<list.length;i++){as=list[i].assets||[];for(j=0;j<as.length;j++){if(/\.apk$/i.test(as[j].name)){n+=as[j].download_count||0;}}}
+  d.getElementById('dlTotal').textContent=n.toLocaleString('tr-TR');
+  d.getElementById('stats').hidden=false;
 }).catch(function(){});
 
 /* Örnek kelime kartı */
